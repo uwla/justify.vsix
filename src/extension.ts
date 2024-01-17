@@ -86,6 +86,49 @@ export function activate(context: vscode.ExtensionContext) {
             editBuilder.replace(lineRange, justifiedText);
         });
     });
+
+    registerCommand("justify.justifyCurrentParagraph", () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+
+        // Get the positions for the paragraph range.
+        const currentPosition = editor.selection.active;
+        const startLine = findParagraphStart(editor, currentPosition.line);
+        const endLine = findParagraphEnd(editor, currentPosition.line);
+        const endCol = editor.document.lineAt(endLine).text.length;
+
+        // Get the paragraph range.
+        const paragraphStart = new vscode.Position(startLine, 0);
+        const paragraphEnd = new vscode.Position(endLine, endCol);
+        const paragraphRange = new vscode.Range(paragraphStart, paragraphEnd);
+
+        // Get the original text.
+        const currentParagraph = editor.document.getText(paragraphRange);
+
+        // Justify the original text.
+        const justifiedText = justify(currentParagraph);
+
+        editor.edit((editBuilder) => {
+            editBuilder.replace(paragraphRange, justifiedText);
+        });
+    });
+}
+
+function findParagraphStart(editor: vscode.TextEditor, line: number): number {
+    while (line > 0 && !editor.document.lineAt(line - 1).isEmptyOrWhitespace) {
+        line--;
+    }
+    return line;
+}
+
+function findParagraphEnd(editor: vscode.TextEditor, line: number): number {
+    const lastLine = editor.document.lineCount - 1;
+    while (line < lastLine && !editor.document.lineAt(line + 1).isEmptyOrWhitespace) {
+        line++;
+    }
+    return line;
 }
 
 // This method is called when your extension is deactivated

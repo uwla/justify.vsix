@@ -27,6 +27,10 @@
             {
                 "command": "justify.justifyCurrentLine",
                 "title": "Justify current line"
+            },
+            {
+                "command": "justify.justifyCurrentParagraph",
+                "title": "Justify current paragraph"
             }
         ]
     },
