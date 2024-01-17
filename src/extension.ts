@@ -64,6 +64,28 @@ export function activate(context: vscode.ExtensionContext) {
             editBuilder.replace(wholeDocumentRange, justifiedText);
         });
     });
+
+    registerCommand("justify.justifyCurrentLine", () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+
+        // Get current line.
+        const currentPosition = editor.selection.active;
+        const currentLine = editor.document.lineAt(currentPosition.line).text;
+
+        // Justify the original text.
+        const justifiedText = justify(currentLine);
+
+        // Replace the text of the current line with the new text.
+        editor.edit((editBuilder) => {
+            const lineStart = new vscode.Position(currentPosition.line, 0);
+            const lineEnd = new vscode.Position(currentPosition.line, currentLine.length);
+            const lineRange = new vscode.Range(lineStart, lineEnd);
+            editBuilder.replace(lineRange, justifiedText);
+        });
+    });
 }
 
 // This method is called when your extension is deactivated
