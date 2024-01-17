@@ -1,25 +1,37 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+// Import our main library
+const justify = require("@uwlajs/justify").justify;
+
+// This method is called when your extension is activated.
+// Your extension is activated the very first time the command is executed.
 export function activate(context: vscode.ExtensionContext) {
+    function registerCommand(cmd: string, callback: (...args: any[]) => any) {
+        const disposable = vscode.commands.registerCommand(cmd, callback);
+        context.subscriptions.push(disposable);
+    }
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "justipy" is now active!');
+    registerCommand("justify.justifySelection", () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('justipy.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from justipy!');
-	});
+        // Get selected text.
+        const selection = editor.selection;
+        const selectedText = editor.document.getText(selection);
 
-	context.subscriptions.push(disposable);
+        // Justify the original text.
+        const justifiedText = justify(selectedText);
+
+        // Replace the selected text with the new text.
+        editor.edit((editBuilder) => {
+            editBuilder.replace(selection, justifiedText);
+        });
+    });
+
 }
 
 // This method is called when your extension is deactivated
