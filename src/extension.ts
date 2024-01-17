@@ -32,6 +32,38 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
+    registerCommand("justify.justifyCurrentFile", () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+
+        // Get the full text of the current file.
+        const fullText = editor.document.getText();
+
+        // Justify the original text.
+        const justifiedText = justify(fullText);
+
+        // Replace the entire file contents with the new text.
+        editor.edit((editBuilder) => {
+            // Document
+            const document = editor.document;
+
+            // Start of the document
+            const documentStart = new vscode.Position(0, 0);
+
+            // End of the document
+            const lineEnd = document.lineCount - 1;
+            const characterEnd = document.lineAt(lineEnd - 1).text.length;
+            const documentEnd = new vscode.Position(lineEnd, characterEnd);
+
+            // Replacement range
+            const wholeDocumentRange = new vscode.Range(documentStart, documentEnd);
+
+            // Finally, replace it.
+            editBuilder.replace(wholeDocumentRange, justifiedText);
+        });
+    });
 }
 
 // This method is called when your extension is deactivated

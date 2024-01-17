@@ -19,6 +19,10 @@
             {
                 "command": "justify.justifySelection",
                 "title": "Justify selected text"
+            },
+            {
+                "command": "justify.justifyCurrentFile",
+                "title": "Justify current file"
             }
         ]
     },
