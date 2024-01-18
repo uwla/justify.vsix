@@ -21,16 +21,32 @@
                 "title": "Justify selected text"
             },
             {
+                "command": "justify.justifySelectionWithPrompt",
+                "title": "Justify selected text (using custom line width)"
+            },
+            {
                 "command": "justify.justifyCurrentFile",
                 "title": "Justify current file"
+            },
+            {
+                "command": "justify.justifyCurrentFileWithPrompt",
+                "title": "Justify current file (using custom line width)"
             },
             {
                 "command": "justify.justifyCurrentLine",
                 "title": "Justify current line"
             },
             {
+                "command": "justify.justifyCurrentLineWithPrompt",
+                "title": "Justify current line (using custom line width)"
+            },
+            {
                 "command": "justify.justifyCurrentParagraph",
                 "title": "Justify current paragraph"
+            },
+            {
+                "command": "justify.justifyCurrentParagraphWithPrompt",
+                "title": "Justify current paragraph (using custom line width)"
             }
         ]
     },

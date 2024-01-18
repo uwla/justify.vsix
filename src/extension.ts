@@ -5,6 +5,9 @@ import * as vscode from "vscode";
 // Import our main library
 const justify = require("@uwlajs/justify").default;
 
+// Type definitions.
+type callback = (...args : any[]) => any;
+
 // Main functions
 function justifySelection(editor: vscode.TextEditor, n: number = 80) {
     // Get selected text.
@@ -25,7 +28,7 @@ function justifyFile(editor: vscode.TextEditor, n: number = 80) {
     const fullText = editor.document.getText();
 
     // Justify the original text.
-    const justifiedText = justify(fullText);
+    const justifiedText = justify(fullText, n);
 
     // Document.
     const document = editor.document;
@@ -53,7 +56,7 @@ function justifyLine(editor: vscode.TextEditor, n: number = 80) {
     const currentLine = editor.document.lineAt(currentPosition.line).text;
 
     // Justify the original text.
-    const justifiedText = justify(currentLine);
+    const justifiedText = justify(currentLine, n);
 
     // Determine range.
     const lineStart = new vscode.Position(currentPosition.line, 0);
@@ -82,7 +85,7 @@ function justifyParagraph(editor: vscode.TextEditor, n: number = 80) {
     const currentParagraph = editor.document.getText(paragraphRange);
 
     // Justify the original text.
-    const justifiedText = justify(currentParagraph);
+    const justifiedText = justify(currentParagraph, n);
 
     editor.edit((editBuilder) => {
         editBuilder.replace(paragraphRange, justifiedText);
@@ -92,12 +95,12 @@ function justifyParagraph(editor: vscode.TextEditor, n: number = 80) {
 // This method is called when your extension is activated.
 // Your extension is activated the very first time the command is executed.
 export function activate(context: vscode.ExtensionContext) {
-
     // wrapper to register commands without repeating code.
-    function registerCommand(cmd: string, callback: (...args: any[]) => any) {
+    function registerCommand(cmd: string, callback: callback) {
         // actual callback.
         const cmdCallback = () => {
             const editor = vscode.window.activeTextEditor;
+            // only makes the call if there is an active editor.
             if (editor) {
                 callback(editor);
             }
@@ -109,10 +112,35 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(disposable);
     }
 
-    registerCommand("justify.justifySelection", justifySelection);
-    registerCommand("justify.justifyCurrentFile", justifyFile);
-    registerCommand("justify.justifyCurrentLine", justifyLine);
-    registerCommand("justify.justifyCurrentParagraph", justifyParagraph);
+    // prompt for a value using functional programming.
+    function promptForValue(callback: callback): callback {
+        return async function(editor: vscode.TextEditor) {
+            const minValue = 10;
+            let value : any = await vscode.window.showInputBox({
+                prompt: "Enter desire line width",
+                placeHolder: "80",
+            });
+            callback(editor, Math.max(minValue, Number(value)));
+        };
+    }
+
+    // Commands to be registered.
+    const commands = [
+        ["justify.justifySelection", justifySelection],
+        ["justify.justifyCurrentFile", justifyFile],
+        ["justify.justifyCurrentLine", justifyLine],
+        ["justify.justifyCurrentParagraph", justifyParagraph],
+    ];
+
+    for (let command of commands) {
+        let commandName = command[0] as string;
+        let commandCallback = command[1] as callback;
+        registerCommand(commandName, commandCallback);
+
+        // register the same command, but it will prompt the user for the value.
+        commandName = commandName + 'WithPrompt';
+        registerCommand(commandName, promptForValue(commandCallback));
+    }
 }
 
 function findParagraphStart(editor: vscode.TextEditor, line: number): number {
@@ -124,8 +152,7 @@ function findParagraphStart(editor: vscode.TextEditor, line: number): number {
 
 function findParagraphEnd(editor: vscode.TextEditor, line: number): number {
     const lastLine = editor.document.lineCount - 1;
-    while (line < lastLine && !editor.document.lineAt(line + 1).isEmptyOrWhitespace
-    ) {
+    while (line < lastLine && !editor.document.lineAt(line + 1).isEmptyOrWhitespace) {
         line++;
     }
     return line;
