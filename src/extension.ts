@@ -103,16 +103,25 @@ export function activate(context: vscode.ExtensionContext) {
 
             // Only makes the call if there is an active editor.
             if (editor) {
+                // Get document language.
+                const languageId = editor.document.languageId;
 
-                // Get the default line width.
-                let lineWidth = 80;
+                // Get global and language-specific configuration.
+                const langConfig = vscode.workspace.getConfiguration(`[${languageId}]`);
                 const config = vscode.workspace.getConfiguration();
-                const defaultLineWidth  = config.get('justify.defaultLineWidth');
-                if (defaultLineWidth) {
-                    lineWidth = Number(defaultLineWidth);
+
+                // Attempt to get language-overridable setting.
+                let lineWidth  = langConfig['justify.defaultLineWidth'];
+                if (! lineWidth) {
+                    // Fall back to global setting.
+                    lineWidth = config.get('justify.defaultLineWidth');
+                }
+                if (! lineWidth) {
+                    // Fall back to reasonable default value.
+                    lineWidth = 80;
                 }
 
-                // Calls the justify callback.
+                // Call the justify callback.
                 callback(editor, lineWidth);
             }
         };
