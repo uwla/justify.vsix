@@ -95,24 +95,34 @@ function justifyParagraph(editor: vscode.TextEditor, n: number = 80) {
 // This method is called when your extension is activated.
 // Your extension is activated the very first time the command is executed.
 export function activate(context: vscode.ExtensionContext) {
-    // wrapper to register commands without repeating code.
+    // Wrapper to register commands without repeating code.
     function registerCommand(cmd: string, callback: callback) {
-        // actual callback.
+        // Actual callback.
         const cmdCallback = () => {
             const editor = vscode.window.activeTextEditor;
-            // only makes the call if there is an active editor.
+
+            // Only makes the call if there is an active editor.
             if (editor) {
-                callback(editor);
+
+                // Get the default line width.
+                let lineWidth = 80;
+                const config = vscode.workspace.getConfiguration();
+                const defaultLineWidth  = config.get('justify.defaultLineWidth');
+                if (defaultLineWidth) {
+                    lineWidth = Number(defaultLineWidth);
+                }
+
+                // Calls the justify callback.
+                callback(editor, lineWidth);
             }
         };
 
-        // register cmd.
+        // Register cmd.
         const disposable = vscode.commands.registerCommand(cmd, cmdCallback);
-
         context.subscriptions.push(disposable);
     }
 
-    // prompt for a value using functional programming.
+    // Prompt for a value using functional programming.
     function promptForValue(callback: callback): callback {
         return async function(editor: vscode.TextEditor) {
             const minValue = 10;
@@ -137,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
         let commandCallback = command[1] as callback;
         registerCommand(commandName, commandCallback);
 
-        // register the same command, but it will prompt the user for the value.
+        // Register the same command, but it will prompt the user for the value.
         commandName = commandName + 'WithPrompt';
         registerCommand(commandName, promptForValue(commandCallback));
     }

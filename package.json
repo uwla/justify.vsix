@@ -48,7 +48,18 @@
                 "command": "justify.justifyCurrentParagraphWithPrompt",
                 "title": "Justify current paragraph (using custom line width)"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Justify",
+            "properties": {
+                "justify.defaultLineWidth": {
+                    "type": "number",
+                    "default": 80,
+                    "description": "Default line width used to justify text.",
+                    "scope": "language-overridable"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
