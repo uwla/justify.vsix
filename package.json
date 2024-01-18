@@ -88,6 +88,6 @@
         "webpack-cli": "^5.1.4"
     },
     "dependencies": {
-        "@uwlajs/justify": "^1.0.2"
+        "@uwlajs/justify": "^1.0.3"
     }
 }
