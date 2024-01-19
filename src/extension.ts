@@ -52,15 +52,15 @@ function justifyFile(editor: vscode.TextEditor, n: number = 80) {
 
 function justifyLine(editor: vscode.TextEditor, n: number = 80) {
     // Get current line.
-    const currentPosition = editor.selection.active;
-    const currentLine = editor.document.lineAt(currentPosition.line).text;
+    const position = editor.selection.active;
+    const line = editor.document.lineAt(position.line).text;
 
     // Justify the original text.
-    const justifiedText = justify(currentLine, n);
+    const justifiedText = justify(line, n);
 
     // Determine range.
-    const lineStart = new vscode.Position(currentPosition.line, 0);
-    const lineEnd = new vscode.Position(currentPosition.line, currentLine.length);
+    const lineStart = new vscode.Position(position.line, 0);
+    const lineEnd = new vscode.Position(position.line, line.length);
     const lineRange = new vscode.Range(lineStart, lineEnd);
 
     // Replace the text of the current line with the new text.
@@ -71,9 +71,9 @@ function justifyLine(editor: vscode.TextEditor, n: number = 80) {
 
 function justifyParagraph(editor: vscode.TextEditor, n: number = 80) {
     // Get the positions for the paragraph range.
-    const currentPosition = editor.selection.active;
-    const startLine = findParagraphStart(editor, currentPosition.line);
-    const endLine = findParagraphEnd(editor, currentPosition.line);
+    const position = editor.selection.active;
+    const startLine = findParagraphStart(editor, position.line);
+    const endLine = findParagraphEnd(editor, position.line);
     const endCol = editor.document.lineAt(endLine).text.length;
 
     // Get the paragraph range.
@@ -82,10 +82,10 @@ function justifyParagraph(editor: vscode.TextEditor, n: number = 80) {
     const paragraphRange = new vscode.Range(paragraphStart, paragraphEnd);
 
     // Get the original text.
-    const currentParagraph = editor.document.getText(paragraphRange);
+    const paragraph = editor.document.getText(paragraphRange);
 
     // Justify the original text.
-    const justifiedText = justify(currentParagraph, n);
+    const justifiedText = justify(paragraph, n);
 
     editor.edit((editBuilder) => {
         editBuilder.replace(paragraphRange, justifiedText);
@@ -146,9 +146,9 @@ export function activate(context: vscode.ExtensionContext) {
     // Commands to be registered.
     const commands = [
         ["justify.justifySelection", justifySelection],
-        ["justify.justifyCurrentFile", justifyFile],
-        ["justify.justifyCurrentLine", justifyLine],
-        ["justify.justifyCurrentParagraph", justifyParagraph],
+        ["justify.justifyFile", justifyFile],
+        ["justify.justifyLine", justifyLine],
+        ["justify.justifyParagraph", justifyParagraph],
     ];
 
     for (let command of commands) {

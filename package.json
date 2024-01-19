@@ -18,35 +18,35 @@
         "commands": [
             {
                 "command": "justify.justifySelection",
-                "title": "Justify selected text"
+                "title": "Justify selection"
             },
             {
                 "command": "justify.justifySelectionWithPrompt",
-                "title": "Justify selected text (using custom line width)"
+                "title": "Justify selection (using custom line width)"
             },
             {
-                "command": "justify.justifyCurrentFile",
-                "title": "Justify current file"
+                "command": "justify.justifyFile",
+                "title": "Justify file"
             },
             {
-                "command": "justify.justifyCurrentFileWithPrompt",
-                "title": "Justify current file (using custom line width)"
+                "command": "justify.justifyFileWithPrompt",
+                "title": "Justify file (using custom line width)"
             },
             {
-                "command": "justify.justifyCurrentLine",
-                "title": "Justify current line"
+                "command": "justify.justifyLine",
+                "title": "Justify line"
             },
             {
-                "command": "justify.justifyCurrentLineWithPrompt",
-                "title": "Justify current line (using custom line width)"
+                "command": "justify.justifyLineWithPrompt",
+                "title": "Justify line (using custom line width)"
             },
             {
-                "command": "justify.justifyCurrentParagraph",
-                "title": "Justify current paragraph"
+                "command": "justify.justifyParagraph",
+                "title": "Justify paragraph"
             },
             {
-                "command": "justify.justifyCurrentParagraphWithPrompt",
-                "title": "Justify current paragraph (using custom line width)"
+                "command": "justify.justifyParagraphWithPrompt",
+                "title": "Justify paragraph (using custom line width)"
             }
         ],
         "configuration": {
@@ -62,15 +62,15 @@
         },
         "keybindings": [
             {
-                "command": "justify.justifyCurrentFile",
+                "command": "justify.justifyFile",
                 "key": "alt+j alt+f"
             },
             {
-                "command": "justify.justifyCurrentLine",
+                "command": "justify.justifyLine",
                 "key": "alt+j alt+l"
             },
             {
-                "command": "justify.justifyCurrentParagraph",
+                "command": "justify.justifyParagraph",
                 "key": "alt+j alt+p"
             },
             {
