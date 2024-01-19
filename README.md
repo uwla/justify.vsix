@@ -1,27 +1,56 @@
-# justipy
-
-Justify text.
-
-**Work in progress...**
-
-## Features
+# Justify
 
 Justify-align plain text.
 
-## Requirements
+## Features
 
-Python.
+- custom line width
+- preserve indentation
+- preserve multiline prefix
+- preserve comments
+- format text lists
+- indent list items
+- Markdown support
+- LaTeX support
+
+## Extension Commands
+
+The extension provides the following commands, with self-descriptive names:
+
+- `Justify file`
+- `Justify file (using custom line width)`
+- `Justify line`
+- `Justify line (using custom line width)`
+- `Justify paragraph`
+- `Justify paragraph (using custom line width)`
+- `Justify selection`
+- `Justify selection (using custom line width)`
+
+The commands with custom line width will prompt the user for a line width  value
+before executing.
 
 ## Extension Settings
 
-None.
+The setting `justify.defaultLineWidth` specifies the default line width used  to
+justify text when not using custom value provided by the user via prompt.
 
-## Known Issues
+This value can be set on a per-language basis:
 
-Does not indent everything.
+```json
+{
+    "justify.defaultLineWidth": 80,
+    "[git-commit]": {
+        "editor.rulers": [73],
+        "justify.defaultLineWidth": 72,
+    },
+    "[plaintext]": {
+        "justify.defaultLineWidth": 100,
+    },
+}
+```
 
 ## Release Notes
 
-### 1.0.0
+### 0.0.1
 
-Initial release of Justify.
+Beta release.
