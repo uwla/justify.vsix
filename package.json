@@ -3,11 +3,12 @@
     "displayName": "Justify",
     "description": "Justify-align plain text.",
     "version": "0.0.1",
+	"publisher": "magiccoder",
     "engines": {
         "vscode": "^1.85.0"
     },
     "categories": [
-        "Other"
+        "Formatters", "Other"
     ],
     "repository": {
         "url": "https://github.com/uwla/justify.vsix"
