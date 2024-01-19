@@ -59,7 +59,25 @@
                     "scope": "language-overridable"
                 }
             }
-        }
+        },
+        "keybindings": [
+            {
+                "command": "justify.justifyCurrentFile",
+                "key": "alt+j alt+f"
+            },
+            {
+                "command": "justify.justifyCurrentLine",
+                "key": "alt+j alt+l"
+            },
+            {
+                "command": "justify.justifyCurrentParagraph",
+                "key": "alt+j alt+p"
+            },
+            {
+                "command": "justify.justifySelection",
+                "key": "alt+j alt+s"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
