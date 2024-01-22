@@ -1,114 +1,116 @@
 {
-    "name": "justify",
-    "displayName": "Justify",
-    "description": "Justify-align plain text.",
-    "version": "0.0.1",
-	"publisher": "magiccoder",
-    "engines": {
-        "vscode": "^1.85.0"
-    },
-    "categories": [
-        "Formatters", "Other"
+  "name": "justify",
+  "displayName": "Justify",
+  "description": "Justify-align plain text.",
+  "version": "0.0.1",
+  "publisher": "magiccoder",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uwla/justify.vsix"
+  },
+  "icon": "assets/justify-icon-bg-blue.png",
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "justify.justifySelection",
+        "title": "Justify selection"
+      },
+      {
+        "command": "justify.justifySelectionWithPrompt",
+        "title": "Justify selection (using custom line width)"
+      },
+      {
+        "command": "justify.justifyFile",
+        "title": "Justify file"
+      },
+      {
+        "command": "justify.justifyFileWithPrompt",
+        "title": "Justify file (using custom line width)"
+      },
+      {
+        "command": "justify.justifyLine",
+        "title": "Justify line"
+      },
+      {
+        "command": "justify.justifyLineWithPrompt",
+        "title": "Justify line (using custom line width)"
+      },
+      {
+        "command": "justify.justifyParagraph",
+        "title": "Justify paragraph"
+      },
+      {
+        "command": "justify.justifyParagraphWithPrompt",
+        "title": "Justify paragraph (using custom line width)"
+      }
     ],
-    "repository": {
-		"type": "git",
-        "url": "https://github.com/uwla/justify.vsix"
+    "configuration": {
+      "title": "Justify",
+      "properties": {
+        "justify.defaultLineWidth": {
+          "type": "number",
+          "default": 80,
+          "description": "Default line width used to justify text.",
+          "scope": "language-overridable"
+        }
+      }
     },
-	"icon": "assets/justify-icon-bg-blue.png",
-    "activationEvents": [],
-    "main": "./dist/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "justify.justifySelection",
-                "title": "Justify selection"
-            },
-            {
-                "command": "justify.justifySelectionWithPrompt",
-                "title": "Justify selection (using custom line width)"
-            },
-            {
-                "command": "justify.justifyFile",
-                "title": "Justify file"
-            },
-            {
-                "command": "justify.justifyFileWithPrompt",
-                "title": "Justify file (using custom line width)"
-            },
-            {
-                "command": "justify.justifyLine",
-                "title": "Justify line"
-            },
-            {
-                "command": "justify.justifyLineWithPrompt",
-                "title": "Justify line (using custom line width)"
-            },
-            {
-                "command": "justify.justifyParagraph",
-                "title": "Justify paragraph"
-            },
-            {
-                "command": "justify.justifyParagraphWithPrompt",
-                "title": "Justify paragraph (using custom line width)"
-            }
-        ],
-        "configuration": {
-            "title": "Justify",
-            "properties": {
-                "justify.defaultLineWidth": {
-                    "type": "number",
-                    "default": 80,
-                    "description": "Default line width used to justify text.",
-                    "scope": "language-overridable"
-                }
-            }
-        },
-        "keybindings": [
-            {
-                "command": "justify.justifyFile",
-                "key": "alt+j alt+f"
-            },
-            {
-                "command": "justify.justifyLine",
-                "key": "alt+j alt+l"
-            },
-            {
-                "command": "justify.justifyParagraph",
-                "key": "alt+j alt+p"
-            },
-            {
-                "command": "justify.justifySelection",
-                "key": "alt+j alt+s"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run package",
-        "compile": "webpack",
-        "watch": "webpack --watch",
-        "package": "webpack --mode production --devtool hidden-source-map",
-        "compile-tests": "tsc -p . --outDir out",
-        "watch-tests": "tsc -p . -w --outDir out",
-        "pretest": "npm run compile-tests && npm run compile && npm run lint",
-        "lint": "eslint src --ext ts",
-        "test": "vscode-test"
-    },
-    "devDependencies": {
-        "@types/mocha": "^10.0.6",
-        "@types/node": "18.x",
-        "@types/vscode": "^1.85.0",
-        "@typescript-eslint/eslint-plugin": "^6.15.0",
-        "@typescript-eslint/parser": "^6.15.0",
-        "@vscode/test-cli": "^0.0.4",
-        "@vscode/test-electron": "^2.3.8",
-        "@vscode/vsce": "^2.22.0",
-        "eslint": "^8.56.0",
-        "ts-loader": "^9.5.1",
-        "typescript": "^5.3.3",
-        "webpack": "^5.89.0",
-        "webpack-cli": "^5.1.4"
-    },
-    "dependencies": {
-        "@uwlajs/justify": "^1.0.3"
-    }
+    "keybindings": [
+      {
+        "command": "justify.justifyFile",
+        "key": "alt+j alt+f"
+      },
+      {
+        "command": "justify.justifyLine",
+        "key": "alt+j alt+l"
+      },
+      {
+        "command": "justify.justifyParagraph",
+        "key": "alt+j alt+p"
+      },
+      {
+        "command": "justify.justifySelection",
+        "key": "alt+j alt+s"
+      }
+    ]
+  },
+  "scripts": {
+	"vsix": "vsce package",
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.56.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@uwlajs/justify": "^1.1.0"
+  }
 }
