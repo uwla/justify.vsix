@@ -13,6 +13,20 @@ Justify-align plain text.
 - Markdown support
 - LaTeX support
 
+## Demo
+
+Align code comments:
+
+![align code comments](./assets//demo/demo_code_comments.gif)
+
+Align code comments with custom line width:
+
+![align code comments with custom line width](./assets//demo/demo_code_comments_custom_linewidth.gif)
+
+Align markdown:
+
+![align markdown](./assets//demo/demo_markdown.gif)
+
 ## Extension Commands
 
 The extension provides the following commands, with self-descriptive names:
