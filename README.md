@@ -62,9 +62,3 @@ This value can be set on a per-language basis:
     },
 }
 ```
-
-## Release Notes
-
-### 0.0.1
-
-Beta release.

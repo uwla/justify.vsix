@@ -2,7 +2,7 @@
   "name": "justify",
   "displayName": "Justify",
   "description": "Justify-align plain text.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "magiccoder",
   "engines": {
     "vscode": "^1.85.0"
