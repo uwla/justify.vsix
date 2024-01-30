@@ -2,6 +2,8 @@
 
 Justify-align plain text.
 
+[Link to extension in VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=magiccoder.justify).
+
 ## Features
 
 - custom line width
@@ -47,6 +49,8 @@ before executing.
 
 The setting `justify.defaultLineWidth` specifies the default line width used  to
 justify text when not using custom value provided by the user via prompt.
+
+is at ()[./]
 
 This value can be set on a per-language basis:
 
